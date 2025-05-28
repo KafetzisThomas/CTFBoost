@@ -6,10 +6,10 @@
 # License: GPLv3
 # NOTE: By contributing to this project, you agree to the terms of the GPLv3 license, and agree to grant the project owner the right to also provide or sell this software, including your contribution, to anyone under any other license, with no compensation to you.
 
+import sys
 import colorama
 from colorama import Fore as F
-from prompt_toolkit import prompt
-from Scripts.nmap import check_nmap, run_scan
+from Scripts.nmap import check_nmap, quicknmap, fullnmap
 
 # Initialize colorama for colored output
 colorama.init(autoreset=True)
@@ -28,9 +28,14 @@ _  /    __  /  __  /_   __  __  |  __ \  __ \_  ___/  __/
 
 def main():
     print(banner)
-    check_nmap()
-    target = prompt("Target: ")
-    run_scan(target)
+    print("---" * 28)
+    if "quicknmap" in sys.argv:
+        check_nmap()
+        quicknmap(target=sys.argv[1])
+    elif "fullnmap" in sys.argv:
+        check_nmap()
+        fullnmap(target=sys.argv[1])
+    print("---" * 28)
 
 
 if __name__ == "__main__":

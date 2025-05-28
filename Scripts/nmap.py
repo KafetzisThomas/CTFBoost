@@ -21,13 +21,23 @@ def check_nmap():
         print(f"{F.LIGHTBLUE_EX}* Nmap installed successfully!")
 
 
-def run_scan(target):
-    print("---" * 28)
-    run_nmap = subprocess.run(
-        f"nmap {target}",
-        shell=True,
-        capture_output=True,
-        text=True,
+def quicknmap(target):
+    print(
+        subprocess.run(
+            f"nmap -T4 -F {target}",
+            shell=True,
+            capture_output=True,
+            text=True,
+        ).stdout.rstrip()
     )
-    print(run_nmap.stdout.rstrip())
-    print("---" * 28)
+
+
+def fullnmap(target):
+    print(
+        subprocess.run(
+            f"nmap -p- -A -T4 -sVC -Pn {target}",
+            shell=True,
+            capture_output=True,
+            text=True,
+        ).stdout.rstrip()
+    )
