@@ -8,6 +8,7 @@
 
 import colorama
 from colorama import Fore as F
+from prompt_toolkit import prompt
 from Scripts.nmap import check_nmap, run_scan
 
 # Initialize colorama for colored output
@@ -28,7 +29,7 @@ _  /    __  /  __  /_   __  __  |  __ \  __ \_  ___/  __/
 def main():
     print(banner)
     check_nmap()
-    target = input("Target: ")
+    target = prompt("Target: ")
     run_scan(target)
 
 
