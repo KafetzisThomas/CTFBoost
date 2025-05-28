@@ -6,15 +6,15 @@
 # License: GPLv3
 # NOTE: By contributing to this project, you agree to the terms of the GPLv3 license, and agree to grant the project owner the right to also provide or sell this software, including your contribution, to anyone under any other license, with no compensation to you.
 
-import subprocess
 import colorama
 from colorama import Fore as F
+from Scripts.nmap import check_nmap, run_scan
 
 # Initialize colorama for colored output
 colorama.init(autoreset=True)
 
-print(
-    rf"""{F.LIGHTGREEN_EX}
+
+banner = rf"""{F.LIGHTGREEN_EX}
 ________________________________                   _____ 
 __  ____/__  __/__  ____/__  __ )____________________  /_
 _  /    __  /  __  /_   __  __  |  __ \  __ \_  ___/  __/
@@ -23,29 +23,14 @@ _  /    __  /  __  /_   __  __  |  __ \  __ \_  ___/  __/
 
 
 """
-)
 
-result = subprocess.run(["nmap", "--version"], capture_output=True, text=True)
-if result.returncode == 0:
-    print(f"{F.LIGHTBLUE_EX}OK: Nmap is installed.")
-else:
-    print(f"{F.LIGHTBLUE_EX}* Installing Nmap...")
-    install_nmap = subprocess.run(
-        "sudo apt update && sudo apt install nmap -y",
-        shell=True,
-        capture_output=True,
-        text=True,
-    )
-    print(install_nmap.stdout)
-    print(f"{F.LIGHTBLUE_EX}* Nmap installed sucessfully!")
 
-ip = input("IP: ")
-print("---" * 28)
-run_nmap = subprocess.run(
-    f"nmap {ip}",
-    shell=True,
-    capture_output=True,
-    text=True,
-)
-print(run_nmap.stdout.rstrip())
-print("---" * 28)
+def main():
+    print(banner)
+    check_nmap()
+    target = input("Target: ")
+    run_scan(target)
+
+
+if __name__ == "__main__":
+    main()
