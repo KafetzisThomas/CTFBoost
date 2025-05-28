@@ -9,7 +9,8 @@
 import sys
 import colorama
 from colorama import Fore as F
-from Scripts.nmap import check_nmap, quicknmap, fullnmap
+from Scripts.nmap import check_nmap, quicknmap, fullnmap, detect_web_service
+from Scripts.ffuf import check_ffuf, directory_fuzzing, subdomain_fuzzing
 
 # Initialize colorama for colored output
 colorama.init(autoreset=True)
@@ -29,12 +30,25 @@ _  /    __  /  __  /_   __  __  |  __ \  __ \_  ___/  __/
 def main():
     print(banner)
     print("---" * 28)
+    output = ""
+
+    # Nmap
     if "quicknmap" in sys.argv:
         check_nmap()
-        quicknmap(target=sys.argv[1])
+        output = quicknmap(target=sys.argv[1])
     elif "fullnmap" in sys.argv:
         check_nmap()
-        fullnmap(target=sys.argv[1])
+        output = fullnmap(target=sys.argv[1])
+
+    # fuff
+    if detect_web_service(output):
+        if "ffufdir" in sys.argv:
+            check_ffuf()
+            directory_fuzzing(target=sys.argv[1])
+        elif "ffufsub" in sys.argv:
+            check_ffuf()
+            subdomain_fuzzing(target=sys.argv[1])
+
     print("---" * 28)
 
 
