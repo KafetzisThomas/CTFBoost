@@ -2,14 +2,21 @@
 # -*- coding: UTF-8 -*-
 
 import requests
-from colorama import Fore as F
+from .utils import save_results
 
 
 def probe_host(target):
-    print(f"{F.LIGHTBLUE_EX}Probing host:", target)
+    output = []
     url = f"http://{target}"
+
     try:
         response = requests.get(url, timeout=5)
-        print(f"{target} - {response.status_code}: {response.reason}")
+        line = f"{target} - {response.status_code}: {response.reason}"
+        print(line)
+        output.append(line)
     except requests.RequestException:
-        print(f"{target} - Unreachable")
+        line = f"{target} - Unreachable"
+        print(line)
+        output.append(line)
+
+    save_results(target, "probehost", "\n".join(output))

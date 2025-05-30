@@ -4,6 +4,7 @@
 import os
 import subprocess
 from colorama import Fore as F
+from .utils import save_results
 
 
 def check_ffuf():
@@ -33,20 +34,14 @@ def check_ffuf():
 
 
 def directory_fuzzing(target):
-    result = subprocess.run(
-        f"ffuf -u http://{target}/FUZZ -w SecLists-master/Discovery/Web-Content/common.txt",
-        shell=True,
-        capture_output=True,
-        text=True,
-    ).stdout
-    print(result.rstrip())
+    cmd = f"ffuf -u http://{target}/FUZZ -w SecLists-master/Discovery/Web-Content/common.txt"
+    output = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    print(output.stdout.rstrip())
+    save_results(target, "ffufdir", output.stdout)
 
 
 def subdomain_fuzzing(target):
-    result = subprocess.run(
-        f"ffuf -u http://{target} -w SecLists-master/Discovery/DNS/bitquark-subdomains-top100000.txt -H 'Host:FUZZ.{target}' -fs 178",
-        shell=True,
-        capture_output=True,
-        text=True,
-    ).stdout
-    print(result.rstrip())
+    cmd = f"ffuf -u http://{target} -w SecLists-master/Discovery/DNS/bitquark-subdomains-top100000.txt -H 'Host:FUZZ.{target}' -fs 178"
+    output = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    print(output.stdout.rstrip())
+    save_results(target, "ffufsub", output.stdout)
