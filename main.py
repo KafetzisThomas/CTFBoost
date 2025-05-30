@@ -9,6 +9,7 @@
 import sys
 import colorama
 from colorama import Fore as F
+from Scripts.probe_hosts import probe_host
 from Scripts.nmap import check_nmap, quicknmap, fullnmap, detect_web_service
 from Scripts.ffuf import check_ffuf, directory_fuzzing, subdomain_fuzzing
 
@@ -31,6 +32,9 @@ def main():
     print(banner)
     print("---" * 28)
     output = ""
+
+    # Host probing
+    probe_host(sys.argv[1])
 
     # Nmap
     if "quicknmap" in sys.argv:
