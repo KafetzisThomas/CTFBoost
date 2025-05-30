@@ -4,6 +4,7 @@
 import re
 import subprocess
 from colorama import Fore as F
+from .utils import save_results
 
 
 def check_nmap():
@@ -31,6 +32,7 @@ def quicknmap(target):
     ).stdout
     output = result
     print(output.rstrip())
+    save_results(target, "quicknmap", output)
     return output
 
 
@@ -43,6 +45,7 @@ def fullnmap(target):
     ).stdout
     output = result
     print(output.rstrip())
+    save_results(target, "fullnmap", output)
     return output
 
 
