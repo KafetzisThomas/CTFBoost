@@ -6,12 +6,14 @@ import socket
 import ipaddress
 from .utils import save_results
 
+
 def is_ip(address):
     try:
         ipaddress.ip_address(address)
         return True
     except ValueError:
         return False
+
 
 def probe_host(target):
     output = []

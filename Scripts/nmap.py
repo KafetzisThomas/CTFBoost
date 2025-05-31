@@ -3,24 +3,7 @@
 
 import re
 import subprocess
-from colorama import Fore as F
 from .utils import save_results
-
-
-def check_nmap():
-    try:
-        subprocess.run(["nmap", "--version"], capture_output=True, text=True)
-        print(f"{F.LIGHTBLUE_EX}OK: Nmap is installed.")
-    except FileNotFoundError:
-        print(f"{F.LIGHTBLUE_EX}* Nmap not found. Installing...")
-        install_nmap = subprocess.run(
-            "sudo apt update && sudo apt install nmap -y",
-            shell=True,
-            capture_output=True,
-            text=True,
-        )
-        print(install_nmap.stdout)
-        print(f"{F.LIGHTBLUE_EX}* Nmap installed successfully!")
 
 
 def quicknmap(target):
