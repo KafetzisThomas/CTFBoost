@@ -1,6 +1,6 @@
 <h1 align="center">CTFBoost</h1>
 
-**What is this?**
+**What is this?**  
 A recon tool for bug bounty hunters that simplifies and automates the enumeration process during security assessments.
 
 ## Features
