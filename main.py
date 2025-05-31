@@ -11,8 +11,8 @@ import argparse
 import colorama
 from colorama import Fore as F
 from Scripts.probe_hosts import probe_host
-from Scripts.nmap import check_nmap, quicknmap, fullnmap, detect_web_service
-from Scripts.ffuf import check_ffuf, directory_fuzzing, subdomain_fuzzing
+from Scripts.nmap import quicknmap, fullnmap, detect_web_service
+from Scripts.ffuf import directory_fuzzing, subdomain_fuzzing
 from Scripts.dns_enum import dns_enumeration
 
 # Initialize colorama for colored output
@@ -64,19 +64,15 @@ def main():
 
     # Nmap
     if args.quicknmap:
-        check_nmap()
         output = quicknmap(target=sys.argv[1])
     elif args.fullnmap:
-        check_nmap()
         output = fullnmap(target=sys.argv[1])
 
     # fuff
     if detect_web_service(output):
         if args.ffufdir:
-            check_ffuf()
             directory_fuzzing(target=sys.argv[1])
         elif args.ffufsub:
-            check_ffuf()
             subdomain_fuzzing(target=sys.argv[1])
 
     print("---" * 28)
