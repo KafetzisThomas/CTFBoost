@@ -5,8 +5,7 @@ import re
 import subprocess
 from .utils import save_results
 
-
-def quicknmap(target: str) -> str:
+def quicknmap(target: str) -> tuple[str, str]:
     """
     -T4: set aggressive timing for faster execution.
     -F: fast mode, scans fewer common ports (~100).
@@ -19,11 +18,10 @@ def quicknmap(target: str) -> str:
         print(line, end='')
         output += line
     process.wait()
-    save_results(target, "quicknmap", output)
-    return output
+    domain_dir = save_results(target, "quicknmap", output)
+    return domain_dir, output
 
-
-def fullnmap(target: str) -> str:
+def fullnmap(target: str) -> tuple[str, str]:
     """
     -p-: scan all 65,535 ports.
     -A: enable os detection, version detection, script scanning and traceroute.
@@ -39,9 +37,8 @@ def fullnmap(target: str) -> str:
         print(line, end='')
         output += line
     process.wait()
-    save_results(target, "fullnmap", output)
-    return output
-
+    domain_dir = save_results(target, "fullnmap", output)
+    return domain_dir, output
 
 def detect_web_service(nmap_output: str) -> bool:
     # Simple regex to find open ports 80 or 443 (http/https)

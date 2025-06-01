@@ -2,8 +2,7 @@ import dns.resolver
 from colorama import Fore as F
 from .utils import save_results
 
-
-def dns_enumeration(target):
+def dns_enumeration(target: str) -> str:
     """
     Perform DNS enumeration for the given target.
 
@@ -28,4 +27,5 @@ def dns_enumeration(target):
         except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN):
             print(f"{F.LIGHTRED_EX}{record}: No record found")
 
-    save_results(target, "dnsenum", "\n".join(output))
+    domain_dir = save_results(target, "dnsenum", "\n".join(output))
+    return domain_dir
