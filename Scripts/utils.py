@@ -35,4 +35,5 @@ def generate_report(domain_dir: str) -> str:
         report_file.write(f"## Recon Summary Report\n\n{ai_summary}")
 
     print(f"{F.LIGHTGREEN_EX}AI report saved to: {report_path}")
+    print(f"{F.YELLOW}Note: This AI generated report is for reference only. Manual review and modifications are recommended.")
     return report_path
