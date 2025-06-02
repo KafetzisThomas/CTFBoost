@@ -52,7 +52,7 @@ def main():
         "--ffufsub", action="store_true", help="perform subdomain fuzzing with ffuf"
     )
     parser.add_argument(
-        "--ai-report", action="store_true", help="generate ai summary report"
+        "--ai-report", action="store_true", help="generate ai summary report of all scan results"
     )
 
     args = parser.parse_args()

@@ -10,6 +10,7 @@ A recon tool for bug bounty hunters that simplifies and automates the enumeratio
 * Port scanning
 * Dir/subdir fuzzing
 * Results saved per IP/domain
+* AI generated summary report 
 
 ## Installation
 
@@ -23,7 +24,7 @@ sudo python3 install.py
 ## Usage
 
 ```bash
-usage: main.py [-h] [--probe] [--dnsenum] [--quicknmap] [--fullnmap] [--ffufdir] [--ffufsub] target
+usage: main.py [-h] [--probe] [--dnsenum] [--quicknmap] [--fullnmap] [--ffufdir] [--ffufsub] [--ai-report] target
 
 positional arguments:
   target       target host or ip address
@@ -36,6 +37,7 @@ options:
   --fullnmap   run a full nmap scan
   --ffufdir    perform directory fuzzing with ffuf
   --ffufsub    perform subdomain fuzzing with ffuf
+  --ai-report  generate ai summary report of all scan results
 ```
 
 ## Examples
@@ -62,12 +64,17 @@ python3 main.py <ip/domain> --fullnmap
 
 Fuzz for directories with ffuf:
 ```bash
-python3 main.py <ip/domain> --ffufdir
+python3 main.py <ip/domain> --quicknmap --ffufdir
 ```
 
 Fuzz for subdomains with ffuf:
 ```bash
-python3 main.py <ip/domain> --ffufsub
+python3 main.py <ip/domain> --quicknmap --ffufsub
+```
+
+Generate an AI summary report:
+```bash
+python3 main.py <ip/domain> --probe --quicknmap --ai-summary
 ```
 
 **Note:** Flags can be combined to run multiple scans in one command.
