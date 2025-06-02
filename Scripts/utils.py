@@ -27,7 +27,7 @@ def generate_report(domain_dir: str) -> str:
             with open(file_path, "r") as f:
                 combined_text += f"\n\n--- {filename} ---\n" + f.read()
 
-    prompt = f"Summarize the following recon scan results:\n{combined_text}"
+    prompt = f"Summarize the following scan results into a concise markdown report with findings and recommendations:\n{combined_text}"
     ai_summary = subprocess.run(['ollama', 'run', 'llama4'], input=prompt, capture_output=True, text=True).stdout
 
     report_path = os.path.join(domain_dir, "report.md")
