@@ -14,6 +14,7 @@ from Scripts.probe_hosts import probe_host
 from Scripts.nmap import quicknmap, fullnmap, detect_web_service
 from Scripts.ffuf import directory_fuzzing, subdomain_fuzzing
 from Scripts.dns_enum import dns_enumeration
+from Scripts.utils import generate_report
 
 # Initialize colorama for colored output
 colorama.init(autoreset=True)
@@ -50,33 +51,39 @@ def main():
     parser.add_argument(
         "--ffufsub", action="store_true", help="perform subdomain fuzzing with ffuf"
     )
+    parser.add_argument(
+        "--ai-report", action="store_true", help="generate ai summary report of all scan results"
+    )
 
     args = parser.parse_args()
+    domain_dir = None
     output = ""
 
     # Host probing
     if args.probe:
-        probe_host(sys.argv[1])
+        domain_dir = probe_host(sys.argv[1])
 
     # DNS enumeration
     if args.dnsenum:
-        dns_enumeration(sys.argv[1])
+        domain_dir = dns_enumeration(sys.argv[1])
 
     # Nmap
     if args.quicknmap:
-        output = quicknmap(target=sys.argv[1])
+        domain_dir, output = quicknmap(target=sys.argv[1])
     elif args.fullnmap:
-        output = fullnmap(target=sys.argv[1])
+        domain_dir, output = fullnmap(target=sys.argv[1])
 
-    # fuff
+    # ffuf
     if detect_web_service(output):
         if args.ffufdir:
-            directory_fuzzing(target=sys.argv[1])
+            domain_dir = directory_fuzzing(target=sys.argv[1])
         elif args.ffufsub:
-            subdomain_fuzzing(target=sys.argv[1])
+            domain_dir = subdomain_fuzzing(target=sys.argv[1])
+
+    if args.ai_report:
+        generate_report(domain_dir)
 
     print("---" * 28)
-
 
 if __name__ == "__main__":
     main()

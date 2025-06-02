@@ -98,6 +98,13 @@ def install_tools(package_list: list[str]):
     except subprocess.CalledProcessError:
         print("Package installation failed.")
 
+def install_ollama():
+    """
+    Install Ollama and pull mistral model for AI summaries.
+    """
+    subprocess.run("curl -fsSL https://ollama.com/install.sh | sh", shell=True, capture_output=True, text=True)
+    print("Currently pulling 'mistral' but you can modify the code to use other models from https://ollama.com/library")
+    subprocess.run(f"ollama pull mistral", shell=True, capture_output=True, text=True)
 
 def main():
     package_manager = detect_package_manager()
@@ -107,8 +114,8 @@ def main():
     ensure_pip_installed(package_manager)
     install_tools(["nmap", "ffuf", "unzip"])
 
-    # Download and extract seclists
-    print("Downloading seclists...")
+    # Download and extract SecLists
+    print("Downloading SecLists...")
     subprocess.run(
         "wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O SecList.zip && unzip SecList.zip && rm -f SecList.zip",
         shell=True,
@@ -116,6 +123,13 @@ def main():
         text=True,
     )
 
+    # Check if Ollama is installed, prompt user to install if not
+    if shutil.which("ollama") is None:
+        user_input = input("Ollama is not installed. Do you want to install it to enable AI summary reports? (Y/n): ")
+        if user_input.strip().upper() == "Y":
+                install_ollama()
+    else:
+        print("Ollama is already installed. Skipping installation.")
 
 if __name__ == "__main__":
     main()

@@ -6,16 +6,14 @@ import socket
 import ipaddress
 from .utils import save_results
 
-
-def is_ip(address):
+def is_ip(address: str) -> bool:
     try:
         ipaddress.ip_address(address)
         return True
     except ValueError:
         return False
 
-
-def probe_host(target):
+def probe_host(target: str) -> str:
     output = []
     url = f"http://{target}"
 
@@ -35,4 +33,5 @@ def probe_host(target):
         print(line)
         output.append(line)
 
-    save_results(target, "probehost", "\n".join(output))
+    domain_dir = save_results(target, "probehost", "\n".join(output))
+    return domain_dir
