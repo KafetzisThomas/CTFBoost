@@ -100,11 +100,11 @@ def install_tools(package_list: list[str]):
 
 def install_ollama():
     """
-    Install Ollama and pull llama4 model for AI summaries.
+    Install Ollama and pull mistral model for AI summaries.
     """
     subprocess.run("curl -fsSL https://ollama.com/install.sh | sh", shell=True, capture_output=True, text=True)
-    print("Currently pulling 'llama4' but you can modify the code to use other models from https://ollama.com/library")
-    subprocess.run(f"ollama pull llama4", shell=True, capture_output=True, text=True)
+    print("Currently pulling 'mistral' but you can modify the code to use other models from https://ollama.com/library")
+    subprocess.run(f"ollama pull mistral", shell=True, capture_output=True, text=True)
 
 def main():
     package_manager = detect_package_manager()
