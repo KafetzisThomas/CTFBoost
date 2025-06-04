@@ -10,7 +10,7 @@ import sys
 import argparse
 import colorama
 from colorama import Fore as F
-from Scripts.probe_hosts import probe_host
+from Scripts.probe_host import probe_host
 from Scripts.nmap import quicknmap, fullnmap, detect_web_service
 from Scripts.ffuf import directory_fuzzing, subdomain_fuzzing
 from Scripts.dns_enum import dns_enumeration
