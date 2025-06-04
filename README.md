@@ -9,6 +9,7 @@ A recon tool for bug bounty hunters that simplifies and automates the enumeratio
 * DNS record scanning
 * Port scanning
 * Dir/subdir fuzzing
+* Web vulnerability scanning with Nikto
 * Results saved per IP/domain
 * AI generated summary report 
 
@@ -24,7 +25,8 @@ sudo python3 install.py
 ## Usage
 
 ```bash
-usage: main.py [-h] [--probe] [--dnsenum] [--quicknmap] [--fullnmap] [--ffufdir] [--ffufsub] [--ai-report] target
+usage: main.py [-h] [--probe] [--dnsenum] [--quicknmap] [--fullnmap] [--ffufdir] [--ffufsub] [--nikto] [--ai-report]
+               target
 
 positional arguments:
   target       target host or ip address
@@ -37,6 +39,7 @@ options:
   --fullnmap   run a full nmap scan
   --ffufdir    perform directory fuzzing with ffuf
   --ffufsub    perform subdomain fuzzing with ffuf
+  --nikto      scan for web vulnerabilities using nikto
   --ai-report  generate ai summary report of all scan results
 ```
 
@@ -70,6 +73,11 @@ python3 main.py <ip/domain> --quicknmap --ffufdir
 Fuzz for subdomains with ffuf:
 ```bash
 python3 main.py <ip/domain> --quicknmap --ffufsub
+```
+
+Web vulnerability scanning with Nikto:
+```bash
+python3 main.py <ip/domain> --quicknmap --nikto
 ```
 
 Generate an AI summary report:

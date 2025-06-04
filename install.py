@@ -112,7 +112,7 @@ def main():
 
     update_upgrade_system(package_manager)
     ensure_pip_installed(package_manager)
-    install_tools(["nmap", "ffuf", "unzip"])
+    install_tools(["nmap", "ffuf", "nikto", "unzip"])
 
     # Download and extract SecLists
     print("Downloading SecLists...")

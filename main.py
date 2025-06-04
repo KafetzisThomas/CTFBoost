@@ -14,6 +14,7 @@ from Scripts.probe_hosts import probe_host
 from Scripts.nmap import quicknmap, fullnmap, detect_web_service
 from Scripts.ffuf import directory_fuzzing, subdomain_fuzzing
 from Scripts.dns_enum import dns_enumeration
+from Scripts.nikto import nikto
 from Scripts.utils import generate_report
 
 # Initialize colorama for colored output
@@ -33,7 +34,7 @@ By KafetzisThomas
 
 def main():
     print(banner)
-    print("---" * 28)
+    print("-" * 75)
 
     parser = argparse.ArgumentParser()
     parser.add_argument("target", help="target host or ip address")
@@ -52,6 +53,9 @@ def main():
         "--ffufsub", action="store_true", help="perform subdomain fuzzing with ffuf"
     )
     parser.add_argument(
+        "--nikto", action="store_true", help="scan for web vulnerabilities using nikto"
+    )
+    parser.add_argument(
         "--ai-report", action="store_true", help="generate ai summary report of all scan results"
     )
 
@@ -60,31 +64,29 @@ def main():
     domain_dir = None
     output = ""
 
-    # Host probing
     if args.probe:
         domain_dir = probe_host(target)
 
-    # DNS enumeration
     if args.dnsenum:
         domain_dir = dns_enumeration(target)
 
-    # Nmap
     if args.quicknmap:
         domain_dir, output = quicknmap(target)
     elif args.fullnmap:
         domain_dir, output = fullnmap(target)
 
-    # ffuf
     if detect_web_service(output):
         if args.ffufdir:
             domain_dir = directory_fuzzing(target)
         elif args.ffufsub:
             domain_dir = subdomain_fuzzing(target)
+        elif args.nikto:
+            domain_dir, output = nikto(target)
 
     if args.ai_report:
         generate_report(domain_dir)
 
-    print("---" * 28)
+    print("-" * 75)
 
 if __name__ == "__main__":
     main()
