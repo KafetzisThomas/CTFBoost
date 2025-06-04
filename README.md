@@ -74,7 +74,7 @@ python3 main.py <ip/domain> --quicknmap --ffufsub
 
 Generate an AI summary report:
 ```bash
-python3 main.py <ip/domain> --probe --quicknmap --ai-summary
+python3 main.py <ip/domain> --probe --quicknmap --ai-report
 ```
 
 **Note:** Flags can be combined to run multiple scans in one command.
