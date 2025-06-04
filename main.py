@@ -34,7 +34,6 @@ By KafetzisThomas
 
 def main():
     print(banner)
-    print("-" * 75)
 
     parser = argparse.ArgumentParser()
     parser.add_argument("target", help="target host or ip address")
@@ -85,8 +84,6 @@ def main():
 
     if args.ai_report:
         generate_report(domain_dir)
-
-    print("-" * 75)
 
 if __name__ == "__main__":
     main()

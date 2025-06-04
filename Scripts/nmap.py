@@ -4,6 +4,8 @@ from .utils import save_results
 
 def quicknmap(target: str) -> tuple[str, str]:
     """
+    Perform a quick nmap scan on the target.
+
     -T4: set aggressive timing for faster execution.
     -F: fast mode, scans fewer common ports (~100).
     -v: add verbosity (doesn't affect speed).
@@ -20,6 +22,8 @@ def quicknmap(target: str) -> tuple[str, str]:
 
 def fullnmap(target: str) -> tuple[str, str]:
     """
+    Perform a full nmap scan on the target.
+
     -p-: scan all 65,535 ports.
     -A: enable os detection, version detection, script scanning and traceroute.
     -T4: set aggressive timing for faster execution (still heavy though).
@@ -38,6 +42,8 @@ def fullnmap(target: str) -> tuple[str, str]:
     return domain_dir, output
 
 def detect_web_service(nmap_output: str) -> bool:
-    # Simple regex to find open ports 80 or 443 (http/https)
+    """
+    Detect if a web service (HTTP/HTTPS) is running based on nmap output.
+    """
     web_ports = re.findall(r"(\d+)/tcp\s+open\s+(http|https?)", nmap_output)
     return bool(web_ports)

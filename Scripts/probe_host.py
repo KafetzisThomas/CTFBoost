@@ -4,6 +4,9 @@ import ipaddress
 from .utils import save_results
 
 def is_ip(address: str) -> bool:
+    """
+    Check if the given string is an IP address or domain.
+    """
     try:
         ipaddress.ip_address(address)
         return True
@@ -11,6 +14,9 @@ def is_ip(address: str) -> bool:
         return False
 
 def probe_host(target: str) -> str:
+    """
+    Probe target by sending a GET request.
+    """
     output = []
     url = f"http://{target}"
 
