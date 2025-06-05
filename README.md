@@ -11,7 +11,7 @@ A recon tool for bug bounty hunters that simplifies and automates the enumeratio
 * Dir/subdir fuzzing
 * Web vulnerability scanning with Nikto
 * Results saved per IP/domain
-* AI generated summary report 
+* AI generated summary report with OpenAI/Ollama models
 
 ## Installation
 
@@ -19,6 +19,8 @@ A recon tool for bug bounty hunters that simplifies and automates the enumeratio
 git clone https://github.com/KafetzisThomas/CTFBoost.git
 cd CTFBoost
 pip3 install -r requirements.txt
+mv .env.example .env
+nano .env  # modify file, instructions inside
 sudo python3 install.py
 ```
 
