@@ -3,9 +3,12 @@
 
 # Script to install necessary tools and dependencies.
 
+import os
 import shutil
 import subprocess
+from dotenv import load_dotenv
 
+load_dotenv()
 
 def run_command(cmd: str) -> str:
     """
@@ -98,13 +101,24 @@ def install_tools(package_list: list[str]):
     except subprocess.CalledProcessError:
         print("Package installation failed.")
 
-def install_ollama():
+def install_ollama(model_name: str):
     """
-    Install Ollama and pull mistral model for AI summaries.
+    Install Ollama and pull user selected model for AI summaries.
+    Skip installation if using an OpenAI hosted model.
     """
-    subprocess.run("curl -fsSL https://ollama.com/install.sh | sh", shell=True, capture_output=True, text=True)
-    print("Currently pulling 'mistral' but you can modify the code to use other models from https://ollama.com/library")
-    subprocess.run(f"ollama pull mistral", shell=True, capture_output=True, text=True)
+    if model_name.startswith("gpt-"):
+        print(f"{model_name} is OpenAI hosted. No need to install locally.")
+        return
+
+    # Check if Ollama is installed, prompt user to install if not
+    if shutil.which("ollama") is None:
+        user_input = input("Ollama is not installed. Install it to enable AI summary reports? (Y/n): ")
+        if user_input.strip().lower() not in ("", "y", "yes"):
+            return
+        subprocess.run("curl -fsSL https://ollama.com/install.sh | sh", shell=True, capture_output=True, text=True)
+
+    print(f"Pulling '{model_name}' model from Ollama...")
+    subprocess.run(f"ollama pull {model_name}", shell=True, capture_output=True, text=True)
 
 def main():
     package_manager = detect_package_manager()
@@ -113,6 +127,7 @@ def main():
     update_upgrade_system(package_manager)
     ensure_pip_installed(package_manager)
     install_tools(["nmap", "ffuf", "nikto", "unzip"])
+    install_ollama(os.getenv("LLM_MODEL_NAME"))
 
     # Download and extract SecLists
     print("Downloading SecLists...")
@@ -122,14 +137,6 @@ def main():
         capture_output=True,
         text=True,
     )
-
-    # Check if Ollama is installed, prompt user to install if not
-    if shutil.which("ollama") is None:
-        user_input = input("Ollama is not installed. Do you want to install it to enable AI summary reports? (Y/n): ")
-        if user_input.strip().upper() == "Y":
-                install_ollama()
-    else:
-        print("Ollama is already installed. Skipping installation.")
 
 if __name__ == "__main__":
     main()
