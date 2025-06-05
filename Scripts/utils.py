@@ -1,7 +1,15 @@
 import os
-import subprocess
+from openai import OpenAI
 from datetime import datetime
 from colorama import Fore as F
+from dotenv import load_dotenv
+
+load_dotenv()
+
+client = OpenAI(
+    base_url="http://localhost:11434/v1",
+    api_key=os.getenv("OPENAI_API_KEY")
+)
 
 def save_results(target: str, scan_type: str, output: str) -> str:
     """
@@ -27,13 +35,17 @@ def generate_report(domain_dir: str) -> str:
             with open(file_path, "r") as f:
                 combined_text += f"\n\n--- {filename} ---\n" + f.read()
 
-    print(f"{F.LIGHTBLUE_EX}Generating AI summary report...")
     prompt = f"Summarize the following scan results into a concise markdown report with findings and recommendations:\n{combined_text}"
-    ai_summary = subprocess.run(['ollama', 'run', 'mistral'], input=prompt, capture_output=True, text=True).stdout
+    model = os.getenv("LLM_MODEL_NAME")
+    print(f"{F.LIGHTBLUE_EX}Generating AI summary report using {model}...")
+    response = client.chat.completions.create(
+        model=model,
+        messages=[{"role": "user", "content": prompt}]
+    )
 
     report_path = os.path.join(domain_dir, "report.md")
     with open(report_path, "w") as report_file:
-        report_file.write(f"## Recon Summary Report\n\n{ai_summary}")
+        report_file.write(f"## Recon Summary Report\n\n{response.choices[0].message.content}")
 
     print(f"{F.LIGHTGREEN_EX}AI report saved to: {report_path}")
     print(f"{F.YELLOW}Note: This AI generated report is for reference only. Manual review and modifications are recommended.")
