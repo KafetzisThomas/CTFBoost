@@ -61,7 +61,7 @@ def main():
     args = parser.parse_args()
     target = args.target
     domain_dir = None
-    output = ""
+    nmap_output = ""
 
     if args.probe:
         domain_dir = probe_host(target)
@@ -70,17 +70,17 @@ def main():
         domain_dir = dns_enumeration(target)
 
     if args.quicknmap:
-        domain_dir, output = quicknmap(target)
+        domain_dir, nmap_output = quicknmap(target)
     elif args.fullnmap:
-        domain_dir, output = fullnmap(target)
+        domain_dir, nmap_output = fullnmap(target)
 
-    if detect_web_service(output):
+    if detect_web_service(nmap_output):
         if args.ffufdir:
             domain_dir = directory_fuzzing(target)
         elif args.ffufsub:
             domain_dir = subdomain_fuzzing(target)
         elif args.nikto:
-            domain_dir, output = nikto(target)
+            domain_dir = nikto(target)
 
     if args.ai_report:
         generate_report(domain_dir)
