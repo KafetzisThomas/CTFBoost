@@ -77,9 +77,9 @@ def main():
     if detect_web_service(nmap_output):
         if args.ffufdir:
             domain_dir = directory_fuzzing(target)
-        elif args.ffufsub:
+        if args.ffufsub:
             domain_dir = subdomain_fuzzing(target)
-        elif args.nikto:
+        if args.nikto:
             domain_dir = nikto(target)
 
     if args.ai_report:
