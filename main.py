@@ -15,6 +15,7 @@ from Scripts.nmap import quicknmap, fullnmap, detect_web_service
 from Scripts.ffuf import directory_fuzzing, subdomain_fuzzing
 from Scripts.dns_enum import dns_enumeration
 from Scripts.nikto import nikto
+from Scripts.fetch_frontend import fetch_frontend_code
 from Scripts.utils import generate_report
 
 # Initialize colorama for colored output
@@ -55,6 +56,9 @@ def main():
         "--nikto", action="store_true", help="scan for web vulnerabilities using nikto"
     )
     parser.add_argument(
+        "--frontend-fetch", action="store_true", help="fetch front end files (html,css,js)"
+    )
+    parser.add_argument(
         "--ai-report", action="store_true", help="generate ai summary report of all scan results"
     )
 
@@ -81,6 +85,8 @@ def main():
             domain_dir = subdomain_fuzzing(target)
         if args.nikto:
             domain_dir = nikto(target)
+        if args.frontend_fetch:
+            domain_dir = fetch_frontend_code(target)
 
     if args.ai_report:
         generate_report(domain_dir)
