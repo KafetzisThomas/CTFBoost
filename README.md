@@ -10,6 +10,7 @@ A recon tool for bug bounty hunters that simplifies and automates the enumeratio
 * Port scanning
 * Dir/subdir fuzzing
 * Web vulnerability scanning with Nikto
+* Fetch html and js files
 * Results saved per IP/domain
 * AI generated summary report with OpenAI/Ollama models
 
@@ -27,22 +28,22 @@ sudo python3 install.py
 ## Usage
 
 ```bash
-usage: main.py [-h] [--probe] [--dnsenum] [--quicknmap] [--fullnmap] [--ffufdir] [--ffufsub] [--nikto] [--ai-report]
-               target
+usage: main.py [-h] [--probe] [--dnsenum] [--quicknmap] [--fullnmap] [--ffufdir] [--ffufsub] [--nikto] [--frontend-fetch] [--ai-report] target
 
 positional arguments:
-  target       target host or ip address
+  target            target host or ip address
 
 options:
-  -h, --help   show this help message and exit
-  --probe      probe the host
-  --dnsenum    perform dns enumeration
-  --quicknmap  run a quick nmap scan
-  --fullnmap   run a full nmap scan
-  --ffufdir    perform directory fuzzing with ffuf
-  --ffufsub    perform subdomain fuzzing with ffuf
-  --nikto      scan for web vulnerabilities using nikto
-  --ai-report  generate ai summary report of all scan results
+  -h, --help        show this help message and exit
+  --probe           probe the host
+  --dnsenum         perform dns enumeration
+  --quicknmap       run a quick nmap scan
+  --fullnmap        run a full nmap scan
+  --ffufdir         perform directory fuzzing with ffuf
+  --ffufsub         perform subdomain fuzzing with ffuf
+  --nikto           scan for web vulnerabilities using nikto
+  --frontend-fetch  fetch front end files (html,css,js)
+  --ai-report       generate ai summary report of all scan results
 ```
 
 ## Examples
@@ -80,6 +81,11 @@ python3 main.py <ip/domain> --quicknmap --ffufsub
 Web vulnerability scanning with Nikto:
 ```bash
 python3 main.py <ip/domain> --quicknmap --nikto
+```
+
+Fetch html and js files:
+```bash
+python3 main.py <ip/domain> --quicknmap --frontend-fetch
 ```
 
 Generate an AI summary report:
