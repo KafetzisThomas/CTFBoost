@@ -7,7 +7,10 @@ A recon tool for bug bounty hunters that simplifies and automates the enumeratio
 
 * HTTP host probing
 * DNS record scanning
+* IP address extraction
 * Port scanning
+* Web server detection
+* Service/version detection
 * Dir/subdir fuzzing
 * Web vulnerability scanning with Nikto
 * Fetch html and js files
