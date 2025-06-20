@@ -11,6 +11,7 @@ A recon tool for bug bounty hunters that simplifies and automates the enumeratio
 * Port scanning
 * Web server detection
 * Service/version detection
+* Shodan integration for additional recon
 * Dir/subdir fuzzing
 * Web vulnerability scanning with Nikto
 * Fetch html and js files
@@ -31,7 +32,7 @@ sudo python3 install.py
 ## Usage
 
 ```bash
-usage: main.py [-h] [--probe] [--dnsenum] [--quicknmap] [--fullnmap] [--ffufdir] [--ffufsub] [--nikto] [--frontend-fetch] [--ai-report] target
+usage: main.py [-h] [--probe] [--shodan] [--dnsenum] [--quicknmap] [--fullnmap] [--ffufdir] [--ffufsub] [--nikto] [--frontend-fetch] [--ai-report] target
 
 positional arguments:
   target            target host or ip address
@@ -39,6 +40,7 @@ positional arguments:
 options:
   -h, --help        show this help message and exit
   --probe           probe the host
+  --shodan          fetch shodan info
   --dnsenum         perform dns enumeration
   --quicknmap       run a quick nmap scan
   --fullnmap        run a full nmap scan
@@ -54,6 +56,11 @@ options:
 Probe the target:
 ```bash
 python3 main.py <ip/domain> --probe
+```
+
+Search target with shodan:
+```bash
+python3 main.py <ip/domain> --shodan
 ```
 
 DNS record scan:
@@ -81,7 +88,7 @@ Fuzz for subdomains with ffuf:
 python3 main.py <ip/domain> --quicknmap --ffufsub
 ```
 
-Web vulnerability scanning with Nikto:
+Web vulnerability scanning with nikto:
 ```bash
 python3 main.py <ip/domain> --quicknmap --nikto
 ```
