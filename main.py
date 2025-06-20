@@ -11,6 +11,7 @@ import argparse
 import colorama
 from colorama import Fore as F
 from Scripts.probe_host import probe_host
+from Scripts.shodan import shodan_scan
 from Scripts.nmap import quicknmap, fullnmap, detect_web_service
 from Scripts.ffuf import directory_fuzzing, subdomain_fuzzing
 from Scripts.dns_enum import dns_enumeration
@@ -39,6 +40,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("target", help="target host or ip address")
     parser.add_argument("--probe", action="store_true", help="probe the host")
+    parser.add_argument(
+        "--shodan", action="store_true", help="fetch shodan info"
+    )
     parser.add_argument(
         "--dnsenum", action="store_true", help="perform dns enumeration"
     )
@@ -69,6 +73,9 @@ def main():
 
     if args.probe:
         domain_dir = probe_host(target)
+
+    if args.shodan:
+        domain_dir = shodan_scan(target)
 
     if args.dnsenum:
         domain_dir = dns_enumeration(target)
