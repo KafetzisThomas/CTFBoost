@@ -55,27 +55,16 @@ def update_upgrade_system(package_manager: str):
     print("System updated and upgraded successfully.")
 
 
-def ensure_pip_installed(package_manager: str):
+def ensure_uv_installed():
     """
-    Ensure pip is installed.
+    Ensure uv is installed.
     """
-    if not shutil.which("pip3") and not shutil.which("pip"):
-        print("pip is not installed. Installing pip...")
-        if package_manager == "apt":
-            run_command("sudo apt install python3-pip -y")
-        elif package_manager in ["dnf", "yum"]:
-            run_command(f"sudo {package_manager} install python3-pip -y")
-        elif package_manager == "pacman":
-            run_command("sudo pacman -S python-pip --noconfirm")
-        elif package_manager == "zypper":
-            run_command("sudo zypper install python3-pip -y")
-        elif package_manager == "apk":
-            run_command("sudo apk add py3-pip")
-        elif package_manager == "brew":
-            run_command("brew install python3")
-        print("pip installed successfully.")
+    if not shutil.which("uv"):
+        print("uv is not installed. Installing uv...")
+        run_command("curl -LsSf https://astral.sh/uv/install.sh | sh")
+        print("uv installed successfully.")
     else:
-        print("pip is already installed.")
+        print("uv is already installed.")
 
 
 def install_tools(package_list: list[str]):
@@ -97,7 +86,7 @@ def install_tools(package_list: list[str]):
         cmd = ["brew", "install"] + package_list
 
     try:
-        subprocess.run(cmd, check=True)
+        run_command(cmd)
     except subprocess.CalledProcessError:
         print("Package installation failed.")
 
@@ -115,28 +104,23 @@ def install_ollama(model_name: str):
         user_input = input("Ollama is not installed. Install it to enable AI summary reports? (Y/n): ")
         if user_input.strip().lower() not in ("", "y", "yes"):
             return
-        subprocess.run("curl -fsSL https://ollama.com/install.sh | sh", shell=True, capture_output=True, text=True)
+        run_command("curl -fsSL https://ollama.com/install.sh | sh")
 
     print(f"Pulling '{model_name}' model from Ollama...")
-    subprocess.run(f"ollama pull {model_name}", shell=True, capture_output=True, text=True)
+    run_command(f"ollama pull {model_name}")
 
 def main():
     package_manager = detect_package_manager()
     print("Detected package manager:", package_manager)
 
     update_upgrade_system(package_manager)
-    ensure_pip_installed(package_manager)
+    ensure_uv_installed()
     install_tools(["nmap", "ffuf", "nikto", "unzip"])
     install_ollama(os.getenv("LLM_MODEL_NAME"))
 
     # Download and extract SecLists
     print("Downloading SecLists...")
-    subprocess.run(
-        "wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O SecList.zip && unzip SecList.zip && rm -f SecList.zip",
-        shell=True,
-        capture_output=True,
-        text=True,
-    )
+    run_command("wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O SecList.zip && unzip SecList.zip && rm -f SecList.zip")
 
 if __name__ == "__main__":
     main()
