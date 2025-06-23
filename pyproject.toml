@@ -1,0 +1,14 @@
+[project]
+name = "ctfboost"
+version = "0.1.0"
+description = "Recon tool for bug bounty hunters"
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.13.4",
+    "colorama>=0.4.6",
+    "dnspython>=2.7.0",
+    "openai>=1.90.0",
+    "python-dotenv>=1.1.0",
+    "requests>=2.32.4",
+    "shodan>=1.31.0",
+]

@@ -23,7 +23,6 @@ A recon tool for bug bounty hunters that simplifies and automates the enumeratio
 ```bash
 git clone https://github.com/KafetzisThomas/CTFBoost.git
 cd CTFBoost
-pip3 install -r requirements.txt
 mv .env.example .env
 nano .env  # modify file, instructions inside
 sudo python3 install.py
@@ -55,52 +54,52 @@ options:
 
 Probe the target:
 ```bash
-python3 main.py <ip/domain> --probe
+uv run python3 main.py <ip/domain> --probe
 ```
 
 Search target with shodan:
 ```bash
-python3 main.py <ip/domain> --shodan
+uv run python3 main.py <ip/domain> --shodan
 ```
 
 DNS record scan:
 ```bash
-python3 main.py <ip/domain> --dnsenum
+uv run python3 main.py <ip/domain> --dnsenum
 ```
 
 Quick nmap scan:
 ```bash
-python3 main.py <ip/domain> --quicknmap
+uv run python3 main.py <ip/domain> --quicknmap
 ```
 
 Full nmap scan:
 ```bash
-python3 main.py <ip/domain> --fullnmap
+uv run python3 main.py <ip/domain> --fullnmap
 ```
 
 Fuzz for directories with ffuf:
 ```bash
-python3 main.py <ip/domain> --quicknmap --ffufdir
+uv run python3 main.py <ip/domain> --quicknmap --ffufdir
 ```
 
 Fuzz for subdomains with ffuf:
 ```bash
-python3 main.py <ip/domain> --quicknmap --ffufsub
+uv run python3 main.py <ip/domain> --quicknmap --ffufsub
 ```
 
 Web vulnerability scanning with nikto:
 ```bash
-python3 main.py <ip/domain> --quicknmap --nikto
+uv run python3 main.py <ip/domain> --quicknmap --nikto
 ```
 
 Fetch html and js files:
 ```bash
-python3 main.py <ip/domain> --quicknmap --frontend-fetch
+uv run python3 main.py <ip/domain> --quicknmap --frontend-fetch
 ```
 
 Generate an AI summary report:
 ```bash
-python3 main.py <ip/domain> --probe --quicknmap --ai-report
+uv run python3 main.py <ip/domain> --probe --quicknmap --ai-report
 ```
 
 **Note:** Flags can be combined to run multiple scans in one command.
