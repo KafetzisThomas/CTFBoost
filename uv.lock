@@ -123,6 +123,7 @@ dependencies = [
     { name = "beautifulsoup4" },
     { name = "colorama" },
     { name = "dnspython" },
+    { name = "google-search-results" },
     { name = "openai" },
     { name = "python-dotenv" },
     { name = "requests" },
@@ -134,6 +135,7 @@ requires-dist = [
     { name = "beautifulsoup4", specifier = ">=4.13.4" },
     { name = "colorama", specifier = ">=0.4.6" },
     { name = "dnspython", specifier = ">=2.7.0" },
+    { name = "google-search-results", specifier = ">=2.4.2" },
     { name = "openai", specifier = ">=1.90.0" },
     { name = "python-dotenv", specifier = ">=1.1.0" },
     { name = "requests", specifier = ">=2.32.4" },
@@ -166,6 +168,15 @@ sdist = { url = "https://files.pythonhosted.org/packages/0a/10/c23352565a6544bdc
 wheels = [
     { url = "https://files.pythonhosted.org/packages/4d/36/2a115987e2d8c300a974597416d9de88f2444426de9571f4b59b2cca3acc/filelock-3.18.0-py3-none-any.whl", hash = "sha256:c401f4f8377c4464e6db25fff06205fd89bdd83b65eb0488ed1b160f780e21de", size = 16215, upload-time = "2025-03-14T07:11:39.145Z" },
 ]
+
+[[package]]
+name = "google-search-results"
+version = "2.4.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/77/30/b3a6f6a2e00f8153549c2fa345c58ae1ce8e5f3153c2fe0484d444c3abcb/google_search_results-2.4.2.tar.gz", hash = "sha256:603a30ecae2af8e600b22635757a6df275dad4b934f975e67878ccd640b78245", size = 18818, upload-time = "2023-03-10T11:13:09.953Z" }
 
 [[package]]
 name = "h11"
