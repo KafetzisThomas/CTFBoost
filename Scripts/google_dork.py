@@ -16,6 +16,9 @@ DORKS = [
 ]
 
 def google_dork(target: str) -> str:
+    """
+    Perform google dorking recon on the target.
+    """
     results = []
     for dork in DORKS:
         query = dork.format(target=target)
