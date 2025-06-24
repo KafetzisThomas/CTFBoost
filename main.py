@@ -12,6 +12,7 @@ import colorama
 from colorama import Fore as F
 from Scripts.probe_host import probe_host
 from Scripts.shodan import shodan_scan
+from Scripts.google_dork import google_dork
 from Scripts.nmap import quicknmap, fullnmap, detect_web_service
 from Scripts.ffuf import directory_fuzzing, subdomain_fuzzing
 from Scripts.dns_enum import dns_enumeration
@@ -39,43 +40,38 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("target", help="target host or ip address")
+
+    # Recon basics
     parser.add_argument("--probe", action="store_true", help="probe the host")
-    parser.add_argument(
-        "--shodan", action="store_true", help="fetch shodan info"
-    )
-    parser.add_argument(
-        "--dnsenum", action="store_true", help="perform dns enumeration"
-    )
-    parser.add_argument(
-        "--quicknmap", action="store_true", help="run a quick nmap scan"
-    )
+    parser.add_argument("--dnsenum", action="store_true", help="perform dns enumeration")
+
+    # Scanning options
+    parser.add_argument("--quicknmap", action="store_true", help="run a quick nmap scan")
     parser.add_argument("--fullnmap", action="store_true", help="run a full nmap scan")
-    parser.add_argument(
-        "--ffufdir", action="store_true", help="perform directory fuzzing with ffuf"
-    )
-    parser.add_argument(
-        "--ffufsub", action="store_true", help="perform subdomain fuzzing with ffuf"
-    )
-    parser.add_argument(
-        "--nikto", action="store_true", help="scan for web vulnerabilities using nikto"
-    )
-    parser.add_argument(
-        "--frontend-fetch", action="store_true", help="fetch front end files (html,css,js)"
-    )
-    parser.add_argument(
-        "--ai-report", action="store_true", help="generate ai summary report of all scan results"
-    )
+
+    # Service specific info gathering
+    parser.add_argument("--shodan", action="store_true", help="fetch shodan info")
+    parser.add_argument("--google-dork", action="store_true", help="perform google dorking recon")
+
+    # Fuzzing
+    parser.add_argument("--ffufdir", action="store_true", help="perform directory fuzzing with ffuf")
+    parser.add_argument("--ffufsub", action="store_true", help="perform subdomain fuzzing with ffuf")
+
+    # Vulnerability scanning
+    parser.add_argument("--nikto", action="store_true", help="scan for web vulnerabilities using nikto")
+
+    # File fetching
+    parser.add_argument("--frontend-fetch", action="store_true", help="fetch front end files (html,css,js)")
+
+    # Summary Report
+    parser.add_argument("--ai-report", action="store_true", help="generate ai summary report of all scan results")
 
     args = parser.parse_args()
     target = args.target
     domain_dir = None
-    nmap_output = ""
 
     if args.probe:
         domain_dir = probe_host(target)
-
-    if args.shodan:
-        domain_dir = shodan_scan(target)
 
     if args.dnsenum:
         domain_dir = dns_enumeration(target)
@@ -84,8 +80,16 @@ def main():
         domain_dir, nmap_output = quicknmap(target)
     elif args.fullnmap:
         domain_dir, nmap_output = fullnmap(target)
+    else:
+        nmap_output = None
 
-    if detect_web_service(nmap_output):
+    if args.shodan:
+        domain_dir = shodan_scan(target)
+
+    if args.google_dork:
+        domain_dir = google_dork(target)
+
+    if nmap_output and detect_web_service(nmap_output):
         if args.ffufdir:
             domain_dir = directory_fuzzing(target)
         if args.ffufsub:

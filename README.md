@@ -12,6 +12,7 @@ A recon tool for bug bounty hunters that simplifies and automates the enumeratio
 * Web server detection
 * Service/version detection
 * Shodan integration for additional recon
+* Google Dorking for web exposure discovery
 * Dir/subdir fuzzing
 * Web vulnerability scanning with Nikto
 * Fetch html and js files
@@ -31,7 +32,7 @@ sudo python3 install.py
 ## Usage
 
 ```bash
-usage: main.py [-h] [--probe] [--shodan] [--dnsenum] [--quicknmap] [--fullnmap] [--ffufdir] [--ffufsub] [--nikto] [--frontend-fetch] [--ai-report] target
+usage: main.py [-h] [--probe] [--dnsenum] [--quicknmap] [--fullnmap] [--shodan] [--google-dork] [--ffufdir] [--ffufsub] [--nikto] [--frontend-fetch] [--ai-report] target
 
 positional arguments:
   target            target host or ip address
@@ -39,10 +40,11 @@ positional arguments:
 options:
   -h, --help        show this help message and exit
   --probe           probe the host
-  --shodan          fetch shodan info
   --dnsenum         perform dns enumeration
   --quicknmap       run a quick nmap scan
   --fullnmap        run a full nmap scan
+  --shodan          fetch shodan info
+  --google-dork     perform google dorking recon
   --ffufdir         perform directory fuzzing with ffuf
   --ffufsub         perform subdomain fuzzing with ffuf
   --nikto           scan for web vulnerabilities using nikto
@@ -55,11 +57,6 @@ options:
 Probe the target:
 ```bash
 uv run python3 main.py <ip/domain> --probe
-```
-
-Search target with shodan:
-```bash
-uv run python3 main.py <ip/domain> --shodan
 ```
 
 DNS record scan:
@@ -75,6 +72,16 @@ uv run python3 main.py <ip/domain> --quicknmap
 Full nmap scan:
 ```bash
 uv run python3 main.py <ip/domain> --fullnmap
+```
+
+Search target with shodan:
+```bash
+uv run python3 main.py <ip/domain> --shodan
+```
+
+Search target for exposed sensitive info with Google Dorking:
+```bash
+uv run python3 main.py <ip/domain> --google-dork
 ```
 
 Fuzz for directories with ffuf:
