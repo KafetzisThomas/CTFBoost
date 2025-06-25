@@ -13,6 +13,7 @@ A recon tool for bug bounty hunters that simplifies and automates the enumeratio
 * Service/version detection
 * Shodan integration for additional recon
 * Google Dorking for web exposure discovery
+* Wayback Machine for archived urls
 * Dir/subdir fuzzing
 * Web vulnerability scanning with Nikto
 * Fetch html and js files
@@ -32,24 +33,27 @@ sudo python3 install.py
 ## Usage
 
 ```bash
-usage: main.py [-h] [--probe] [--dnsenum] [--quicknmap] [--fullnmap] [--shodan] [--google-dork] [--ffufdir] [--ffufsub] [--nikto] [--frontend-fetch] [--ai-report] target
+usage: main.py [-h] [--probe] [--dnsenum] [--quicknmap] [--fullnmap] [--shodan] [--google-dork] [--wayback-machine] [--ffufdir] [--ffufsub] [--nikto] [--frontend-fetch]
+               [--ai-report]
+               target
 
 positional arguments:
-  target            target host or ip address
+  target             target host or ip address
 
 options:
-  -h, --help        show this help message and exit
-  --probe           probe the host
-  --dnsenum         perform dns enumeration
-  --quicknmap       run a quick nmap scan
-  --fullnmap        run a full nmap scan
-  --shodan          fetch shodan info
-  --google-dork     perform google dorking recon
-  --ffufdir         perform directory fuzzing with ffuf
-  --ffufsub         perform subdomain fuzzing with ffuf
-  --nikto           scan for web vulnerabilities using nikto
-  --frontend-fetch  fetch front end files (html,css,js)
-  --ai-report       generate ai summary report of all scan results
+  -h, --help         show this help message and exit
+  --probe            probe the host
+  --dnsenum          perform dns enumeration
+  --quicknmap        run a quick nmap scan
+  --fullnmap         run a full nmap scan
+  --shodan           fetch shodan info
+  --google-dork      perform google dorking recon
+  --wayback-machine  fetch archived urls from the wayback machine
+  --ffufdir          perform directory fuzzing with ffuf
+  --ffufsub          perform subdomain fuzzing with ffuf
+  --nikto            scan for web vulnerabilities using nikto
+  --frontend-fetch   fetch front end files (html,css,js)
+  --ai-report        generate ai summary report of all scan results
 ```
 
 ## Examples
@@ -82,6 +86,11 @@ uv run python3 main.py <ip/domain> --shodan
 Search target for exposed sensitive info with Google Dorking:
 ```bash
 uv run python3 main.py <ip/domain> --google-dork
+```
+
+Search for archived urls with Wayback Machine 
+```bash
+uv run python3 main.py <ip/domain> --wayback-machine
 ```
 
 Fuzz for directories with ffuf:
