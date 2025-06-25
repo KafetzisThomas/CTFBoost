@@ -6,13 +6,13 @@
 # License: GPLv3
 # NOTE: By contributing to this project, you agree to the terms of the GPLv3 license, and agree to grant the project owner the right to also provide or sell this software, including your contribution, to anyone under any other license, with no compensation to you.
 
-import sys
 import argparse
 import colorama
 from colorama import Fore as F
 from Scripts.probe_host import probe_host
 from Scripts.shodan import shodan_scan
 from Scripts.google_dork import google_dork
+from Scripts.wayback_machine import wayback_machine
 from Scripts.nmap import quicknmap, fullnmap, detect_web_service
 from Scripts.ffuf import directory_fuzzing, subdomain_fuzzing
 from Scripts.dns_enum import dns_enumeration
@@ -23,7 +23,6 @@ from Scripts.utils import generate_report
 # Initialize colorama for colored output
 colorama.init(autoreset=True)
 
-
 banner = rf"""{F.LIGHTGREEN_EX}
 ________________________________                   _____ 
 __  ____/__  __/__  ____/__  __ )____________________  /_
@@ -33,7 +32,6 @@ _  /    __  /  __  /_   __  __  |  __ \  __ \_  ___/  __/
 
 By KafetzisThomas
 """
-
 
 def main():
     print(banner)
@@ -52,6 +50,7 @@ def main():
     # Service specific info gathering
     parser.add_argument("--shodan", action="store_true", help="fetch shodan info")
     parser.add_argument("--google-dork", action="store_true", help="perform google dorking recon")
+    parser.add_argument("--wayback-machine", action="store_true", help="fetch archived urls from the wayback machine")
 
     # Fuzzing
     parser.add_argument("--ffufdir", action="store_true", help="perform directory fuzzing with ffuf")
@@ -88,6 +87,9 @@ def main():
 
     if args.google_dork:
         domain_dir = google_dork(target)
+
+    if args.wayback_machine:
+        domain_dir = wayback_machine(target)
 
     if nmap_output and detect_web_service(nmap_output):
         if args.ffufdir:
