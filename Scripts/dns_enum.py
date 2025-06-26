@@ -25,12 +25,11 @@ def dns_enumeration(target: str) -> str:
                 print(f"{F.LIGHTGREEN_EX}{line}")
                 results.append(line)
         except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN):
-            print(f"{F.LIGHTRED_EX}{record}: No DNS records found")
+            line = f"{record}: No DNS records found"
+            print(f"{F.LIGHTRED_EX}{line}")
+            results.append(line)
 
     output = f"=== DNS enumeration results for {target} ===\n\n"
-    if results:
-        output += "\n".join(results)
-    else:
-        output += f"No DNS records found for {target}"
+    output += "\n".join(results)
     domain_dir = save_results(target, "dnsenum", output)
     return domain_dir
