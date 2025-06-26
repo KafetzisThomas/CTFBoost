@@ -60,62 +60,62 @@ options:
 
 Probe the target:
 ```bash
-uv run python3 main.py <ip/domain> --probe
+uv run main.py <ip/domain> --probe
 ```
 
 DNS record scan:
 ```bash
-uv run python3 main.py <ip/domain> --dnsenum
+uv run main.py <ip/domain> --dnsenum
 ```
 
 Quick nmap scan:
 ```bash
-uv run python3 main.py <ip/domain> --quicknmap
+uv run main.py <ip/domain> --quicknmap
 ```
 
 Full nmap scan:
 ```bash
-uv run python3 main.py <ip/domain> --fullnmap
+uv run main.py <ip/domain> --fullnmap
 ```
 
 Search target with shodan:
 ```bash
-uv run python3 main.py <ip/domain> --shodan
+uv run main.py <ip/domain> --shodan
 ```
 
 Search target for exposed sensitive info with Google Dorking:
 ```bash
-uv run python3 main.py <ip/domain> --google-dork
+uv run main.py <ip/domain> --google-dork
 ```
 
 Search for archived urls with Wayback Machine 
 ```bash
-uv run python3 main.py <ip/domain> --wayback-machine
+uv run main.py <ip/domain> --wayback-machine
 ```
 
 Fuzz for directories with ffuf:
 ```bash
-uv run python3 main.py <ip/domain> --quicknmap --ffufdir
+uv run main.py <ip/domain> --quicknmap --ffufdir
 ```
 
 Fuzz for subdomains with ffuf:
 ```bash
-uv run python3 main.py <ip/domain> --quicknmap --ffufsub
+uv run main.py <ip/domain> --quicknmap --ffufsub
 ```
 
 Web vulnerability scanning with nikto:
 ```bash
-uv run python3 main.py <ip/domain> --quicknmap --nikto
+uv run main.py <ip/domain> --quicknmap --nikto
 ```
 
 Fetch html and js files:
 ```bash
-uv run python3 main.py <ip/domain> --quicknmap --frontend-fetch
+uv run main.py <ip/domain> --quicknmap --frontend-fetch
 ```
 
 Generate an AI summary report:
 ```bash
-uv run python3 main.py <ip/domain> --probe --quicknmap --ai-report
+uv run main.py <ip/domain> --probe --quicknmap --ai-report
 ```
 
 **Note:** Flags can be combined to run multiple scans in one command.
