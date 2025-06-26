@@ -12,7 +12,8 @@ def quicknmap(target: str) -> tuple[str, str]:
     """
     cmd = f"nmap -T4 -F -v {target}"
     process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-    output = ""
+    header = f"=== Nmap quick nmap scan results for {target} ===\n\n"
+    output = header
     for line in process.stdout:
         print(line, end='')
         output += line
@@ -33,7 +34,8 @@ def fullnmap(target: str) -> tuple[str, str]:
     """
     cmd = f"nmap -p- -A -T4 -sVC -Pn -v {target}"
     process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-    output = ""
+    header = f"=== Nmap full nmap scan results for {target} ===\n\n"
+    output = header
     for line in process.stdout:
         print(line, end='')
         output += line

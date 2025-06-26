@@ -30,6 +30,10 @@ def google_dork(target: str) -> str:
             link = result.get("link")
             results.append(f"{query} | {title} | {link}") if link else None
 
-    output = "\n".join(results) if results else f"No Google dork results found for {target}"
+    output = f"=== Google Dork results for {target} ===\n\n"
+    if results:
+        output += "\n".join(results)
+    else:
+        output += f"No Google dork results found for {target}"
     domain_dir = save_results(target, "google", output)
     return domain_dir

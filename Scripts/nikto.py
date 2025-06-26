@@ -9,7 +9,8 @@ def nikto(target: str) -> str:
     """
     cmd = f"nikto -h {target}"
     process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-    output = ""
+    header = f"=== Nikto vulnerability scan results for {target} ===\n\n"
+    output = header
     for line in process.stdout:
         print(line, end='')
         output += line

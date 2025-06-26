@@ -10,10 +10,12 @@ def directory_fuzzing(target: str) -> str:
     """
     cmd = f"ffuf -u http://{target}/FUZZ -w SecLists-master/Discovery/Web-Content/common.txt"
     process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-    output = ""
+    header = f"=== ffuf directory fuzzing results for {target} ===\n\n"
+    output = header
     for line in process.stdout:
         print(line, end='')
         output += line
+    process.wait()
     domain_dir = save_results(target, "ffufdir", output)
     return domain_dir
 
@@ -28,7 +30,8 @@ def subdomain_fuzzing(target: str) -> str:
     """
     cmd = f"ffuf -u http://{target} -w SecLists-master/Discovery/DNS/bitquark-subdomains-top100000.txt -H 'Host:FUZZ.{target}' -fs 178"
     process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-    output = ""
+    header = f"=== ffuf subdomain fuzzing results for {target} ===\n\n"
+    output = header
     for line in process.stdout:
         print(line, end='')
         output += line

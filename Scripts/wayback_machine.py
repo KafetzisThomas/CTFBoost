@@ -3,6 +3,9 @@ import requests
 from .utils import save_results
 
 def wayback_machine(target: str) -> str:
+    """
+    Fetch archived snapshots of the target.
+    """
     url = "http://web.archive.org/cdx/search/cdx"
     params = {
         "url": f"{target}/*",
@@ -22,7 +25,11 @@ def wayback_machine(target: str) -> str:
                 "snapshot_url": f"https://web.archive.org/web/{timestamp}/{url}"
             })
 
-    result_data = {"target": target, "total": len(snapshots), "snapshots": snapshots}
-    output = json.dumps(result_data, indent=2) if snapshots else f"No Wayback Machine results found for {target}"
+    results = {"target": target, "total": len(snapshots), "snapshots": snapshots}
+    output = f"=== Wayback Machine scan results for {target} ===\n\n"
+    if snapshots:
+        output += json.dumps(results, indent=2)
+    else:
+        output += f"No Wayback Machine scan results found for {target}"
     domain_dir = save_results(target, "wayback", output)
     return domain_dir

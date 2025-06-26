@@ -13,7 +13,7 @@ def dns_enumeration(target: str) -> str:
     TXT: contains arbitrary text often for verification or policies.
     """
     records = ["A", "AAAA", "MX", "NS", "TXT"]
-    output = []
+    results = []
 
     for record in records:
         try:
@@ -23,9 +23,14 @@ def dns_enumeration(target: str) -> str:
             for rdata in answers:
                 line = f"{record}: {rdata.to_text()}"
                 print(f"{F.LIGHTGREEN_EX}{line}")
-                output.append(line)
+                results.append(line)
         except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN):
-            print(f"{F.LIGHTRED_EX}{record}: No record found")
+            print(f"{F.LIGHTRED_EX}{record}: No DNS records found")
 
-    domain_dir = save_results(target, "dnsenum", "\n".join(output))
+    output = f"=== DNS enumeration results for {target} ===\n\n"
+    if results:
+        output += "\n".join(results)
+    else:
+        output += f"No DNS records found for {target}"
+    domain_dir = save_results(target, "dnsenum", output)
     return domain_dir

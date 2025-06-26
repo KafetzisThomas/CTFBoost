@@ -14,6 +14,7 @@ def fetch_frontend_code(target):
 
     # Save html
     with open(os.path.join(domain_dir, "html.txt"), "w", encoding="utf-8") as f:
+        f.write(f"=== HTML content for {target} ===\n\n")
         f.write(response.text)
 
     # Gather js
@@ -29,6 +30,8 @@ def fetch_frontend_code(target):
             js_list.append(js_resp.text)
         except:
             continue
-    save_results(target, "js", "\n\n".join(js_list))
 
+    js_output = f"=== JS content for {target} ===\n\n"
+    js_output += "\n".join(js_list)
+    save_results(target, "js", js_output)
     return domain_dir
