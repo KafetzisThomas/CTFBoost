@@ -15,6 +15,7 @@ A recon tool for bug bounty hunters that simplifies and automates the enumeratio
 * Google Dorking for web exposure discovery
 * Wayback Machine for archived urls
 * Dir/subdir fuzzing
+* 403 Forbidden bypass attempts
 * Web vulnerability scanning with Nikto
 * Fetch html and js files
 * Results saved per IP/domain
