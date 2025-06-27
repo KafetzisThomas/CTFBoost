@@ -35,7 +35,21 @@ def generate_report(domain_dir: str) -> str:
             with open(file_path, "r") as f:
                 combined_text += f"\n\n--- {filename} ---\n" + f.read()
 
-    prompt = f"Summarize the following scan results into a concise markdown report with findings and recommendations:\n{combined_text}"
+    prompt = f"""
+    <instructions>
+    Summarize the following pentest scan results into a detailed, well structured markdown report
+    </instructions>
+    <output>
+        <section>executive summary</section>
+        <section>table of key findings, categorized by severity (critical, high, medium, low)</section>
+        <section>affected assets</section>
+        <section>detailed description of each finding</section>
+        <section>actionable and prioritized recommendations for each finding</section>
+    </output>
+    <scan-results>
+    {combined_text}
+    </scan-results>
+    """
     model = os.getenv("LLM_MODEL_NAME")
     print(f"{F.LIGHTBLUE_EX}Generating AI summary report using {model}...")
     response = client.chat.completions.create(
