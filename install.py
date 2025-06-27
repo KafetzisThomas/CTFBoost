@@ -116,7 +116,7 @@ def main():
     update_upgrade_system(package_manager)
     ensure_uv_installed()
     install_tools(["nmap", "ffuf", "nikto", "unzip"])
-    install_ollama(os.getenv("LLM_MODEL_NAME"))
+    install_ollama(os.getenv("LLM_NAME"))
 
     # Download and extract SecLists
     print("Downloading SecLists...")

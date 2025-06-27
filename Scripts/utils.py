@@ -50,7 +50,7 @@ def generate_report(domain_dir: str) -> str:
     {combined_text}
     </scan-results>
     """
-    model = os.getenv("LLM_MODEL_NAME")
+    model = os.getenv("LLM_NAME")
     print(f"{F.LIGHTBLUE_EX}Generating AI summary report using {model}...")
     response = client.chat.completions.create(
         model=model,
