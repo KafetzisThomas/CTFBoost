@@ -23,7 +23,7 @@ def directory_fuzzing(target: str) -> str:
             url = f"http://{target}/{fuzz_word}"
             bypass_result = try_bypass_403(url)
             print(f"\t\t\t{bypass_result}")
-            output += f"\t\t\t{bypass_result}"
+            output += f"\t\t\t{bypass_result}\n"
     process.wait()
     domain_dir = save_results(target, "ffufdir", output)
     return domain_dir
