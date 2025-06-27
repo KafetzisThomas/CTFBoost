@@ -1,4 +1,5 @@
 import subprocess
+from .bypass_403 import try_bypass_403
 from .utils import save_results
 
 def directory_fuzzing(target: str) -> str:
@@ -13,8 +14,16 @@ def directory_fuzzing(target: str) -> str:
     header = f"=== ffuf directory fuzzing results for {target} ===\n\n"
     output = header
     for line in process.stdout:
+        if ":: Progress" in line:
+            continue
         print(line, end='')
         output += line
+        if "Status: 403" in line:
+            fuzz_word = line.strip().split()[0]
+            url = f"http://{target}/{fuzz_word}"
+            bypass_result = try_bypass_403(url)
+            print(f"\t\t\t{bypass_result}")
+            output += f"\t\t\t{bypass_result}"
     process.wait()
     domain_dir = save_results(target, "ffufdir", output)
     return domain_dir
