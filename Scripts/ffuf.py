@@ -9,7 +9,8 @@ def directory_fuzzing(target: str) -> str:
     -u: url to fuzz
     -w: wordlist used
     """
-    cmd = f"ffuf -u http://{target}/FUZZ -w SecLists-master/Discovery/Web-Content/common.txt"
+    wordlist = input("Wordlist path (Enter for default): ") or "SecLists-master/Discovery/Web-Content/common.txt"
+    cmd = f"ffuf -u http://{target}/FUZZ -w {wordlist}"
     process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
     header = f"=== ffuf directory fuzzing results for {target} ===\n\n"
     output = header
@@ -37,7 +38,8 @@ def subdomain_fuzzing(target: str) -> str:
     -H: specify host
     -fs: exclude irrelevant results
     """
-    cmd = f"ffuf -u http://{target} -w SecLists-master/Discovery/DNS/bitquark-subdomains-top100000.txt -H 'Host:FUZZ.{target}' -fs 178"
+    wordlist = input("Wordlist path (Enter for default): ") or "SecLists-master/Discovery/DNS/bitquark-subdomains-top100000.txt"
+    cmd = f"ffuf -u http://{target} -w {wordlist} -H 'Host:FUZZ.{target}' -fs 178"
     process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
     header = f"=== ffuf subdomain fuzzing results for {target} ===\n\n"
     output = header
