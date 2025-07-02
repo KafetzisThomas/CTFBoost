@@ -17,6 +17,7 @@ A recon tool for bug bounty hunters that simplifies and automates the enumeratio
 * Dir/subdir fuzzing
 * 403 Forbidden bypass attempts
 * Web vulnerability scanning with Nikto
+* Security header analysis for HTTP responses
 * Fetch html and js files
 * Results saved per IP/domain
 * AI generated summary report with OpenAI/Ollama models
