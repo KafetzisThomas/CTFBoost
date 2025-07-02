@@ -13,6 +13,29 @@ def is_ip(address: str) -> bool:
     except ValueError:
         return False
 
+def analyze_security_headers(response_headers: dict) -> dict[str, list[str]]:
+    security_headers = {
+        'content-security-policy': 'CSP',
+        'x-frame-options': 'Clickjacking Protection',
+        'x-content-type-options': 'MIME Sniffing Protection',
+        'strict-transport-security': 'HSTS',
+        'x-xss-protection': 'XSS Protection'
+    }
+
+    headers_lower = {}
+    for key, value in response_headers.items():
+        headers_lower[key.lower()] = value
+
+    present = []
+    missing = []
+    for header, description in security_headers.items():
+        if header in headers_lower:
+            present.append(f"{description}: {headers_lower[header]}")
+        else:
+            missing.append(description)
+
+    return {'missing': missing, 'present': present}
+
 def probe_host(target: str) -> str:
     """
     Probe target by sending a GET request.
@@ -25,6 +48,19 @@ def probe_host(target: str) -> str:
         line = f"{target} - {response.status_code}: {response.reason}"
         print(line)
         results.append(line)
+
+        # Analyze security headers on successful responses
+        if response.status_code == 200:
+            header_analysis = analyze_security_headers(response.headers)
+            results.append(f"\n=== Security Headers Analysis for {target} ===\n")
+            if header_analysis['missing']:
+                results.append("Missing:")
+                for header in header_analysis['missing']:
+                    results.append(f"\t- {header}")
+            if header_analysis['present']:
+                results.append("Present:")
+                for header in header_analysis['present']:
+                    results.append(f"\t- {header}")
 
         # If target is domain resolve to IP and prompt user to add to /etc/hosts
         if not is_ip(target):
