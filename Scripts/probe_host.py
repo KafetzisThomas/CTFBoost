@@ -14,6 +14,9 @@ def is_ip(address: str) -> bool:
         return False
 
 def analyze_security_headers(response_headers: dict) -> dict[str, list[str]]:
+    """
+    Analyze HTTP response headers for presence of key security headers.
+    """
     security_headers = {
         'content-security-policy': 'CSP',
         'x-frame-options': 'Clickjacking Protection',
