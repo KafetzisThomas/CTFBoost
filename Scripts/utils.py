@@ -59,7 +59,7 @@ def generate_report(domain_dir: str) -> str:
 
     report_path = os.path.join(domain_dir, "report.md")
     with open(report_path, "w") as report_file:
-        report_file.write(f"## Recon Summary Report\n\n{response.choices[0].message.content}")
+        report_file.write(f"## Recon Summary Report\n\n{response.choices[0].message['content']}")
 
     print(f"{F.LIGHTGREEN_EX}AI report saved to: {report_path}")
     print(f"{F.YELLOW}Note: This AI generated report is for reference only. Manual review and modifications are recommended.")
